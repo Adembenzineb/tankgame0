@@ -1,0 +1,15 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+#start {
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+#container{
+    border: 1px green solid;
+}
