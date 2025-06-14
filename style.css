@@ -14,9 +14,7 @@ body{
 #container{
     border: 1px green solid;
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    gap: 0
+    gap: 0;
     
 }
 .grid{
