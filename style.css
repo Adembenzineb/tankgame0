@@ -5,17 +5,10 @@ body{
     align-items: center;
     gap: 15px;
 }
-#start {
-    padding: 10px 20px;
-    font-size: 20px;
-    border-radius: 10px;
-    cursor: pointer;
-}
 #container{
     border: 1px green solid;
     display: grid;
     gap: 0;
-    
 }
 .grid{
     border: 1px black solid;
