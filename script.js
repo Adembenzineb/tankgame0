@@ -3,7 +3,7 @@ const container = document.getElementById("container");
 const containerSize = 800;
 
 //Creating grids
-const gridnum = 21;//THE gridnum SHOULD BE iMPAIR!! 
+const gridnum = 17;//THE gridnum SHOULD BE iMPAIR!! 
 container.setAttribute("style" ,`grid-template-columns: repeat(${gridnum}, 1fr); grid-template-rows: repeat(${gridnum}, 1fr); width : ${containerSize}px; height: ${containerSize}px;`);
 const gridSize = containerSize / gridnum;
 for (let i = 1; i <= gridnum**2; i++) {
@@ -29,6 +29,10 @@ const tankWidth = 5;//THE tankWidth Should be always impair !!!
 const tankHeight = 7;//THE tankHeight Should be always impair !!!
 let cutTankH = parseInt(tankWidth/2);
 let cutTankV = parseInt(tankHeight/2);
+changeHitGridL(pos ,tank);
+changeHitGridR(pos ,tank);
+changeHitGridUp(pos,tank);
+changeHitGridDown(pos,tank);
 
 //include the left side of the hit box
 function changeHitGridL(pos,color){
@@ -50,7 +54,7 @@ function changeHitGridR(pos,color){
     }
 }
 
-
+//include the top side of the hit box
 function changeHitGridUp(pos,color){
     let hitGridUp = cutTankV;
     while (hitGridUp > 0){
@@ -62,6 +66,7 @@ function changeHitGridUp(pos,color){
     }
 }
 
+//include the bottom side of the hit box
 function changeHitGridDown(pos,color){
     let hitGridDown = cutTankV;
     while (hitGridDown > 0){
@@ -91,7 +96,7 @@ for (let i = 1 ; i <= gridnum;i++){
 
 //Arrows Event listener
 window.addEventListener("keydown" , (e) => {
-    if (e.key == "ArrowRight" && pos % gridnum != 0){
+    if (e.key == "ArrowRight" && (pos+cutTankH) % gridnum != 0){
         prevDiv = newDiv;
         changeHitGridL(pos,remove);
         changeHitGridR(pos ,remove);
@@ -105,7 +110,7 @@ window.addEventListener("keydown" , (e) => {
         changeHitGridUp(pos,tank);
         changeHitGridDown(pos,tank);
         newDiv.style.backgroundColor = tank;
-    }else if (e.key == "ArrowLeft" && (pos-1) % gridnum != 0){
+    }else if (e.key == "ArrowLeft" && (pos-cutTankH-1) % gridnum != 0){
         prevDiv = newDiv;
         changeHitGridL(pos,remove);
         changeHitGridR(pos ,remove);
@@ -119,7 +124,7 @@ window.addEventListener("keydown" , (e) => {
         changeHitGridUp(pos,tank);
         changeHitGridDown(pos,tank);
         newDiv.style.backgroundColor = tank;
-    }else if (e.key == "ArrowUp" && firstLine.indexOf(pos) == -1){
+    }else if (e.key == "ArrowUp" && firstLine.indexOf(pos-(cutTankV*gridnum)) == -1){
         prevDiv = newDiv;
         changeHitGridL(pos,remove);
         changeHitGridR(pos ,remove);
@@ -133,7 +138,7 @@ window.addEventListener("keydown" , (e) => {
         changeHitGridUp(pos,tank);
         changeHitGridDown(pos,tank);
         newDiv.style.backgroundColor = tank;
-    }else if (e.key == "ArrowDown" && lastLine.indexOf(pos) == -1){
+    }else if (e.key == "ArrowDown" && lastLine.indexOf(pos+(cutTankV*gridnum)) == -1){
         prevDiv = newDiv;
         changeHitGridL(pos,remove);
         changeHitGridR(pos ,remove);
