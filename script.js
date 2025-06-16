@@ -1,10 +1,9 @@
 //Ajusting the size of the container
 const container = document.getElementById("container");
-const containerSize = 650;
+const containerSize = 800;
 
 //Creating grids
-const gridnum = 11;//THE gridnum SHOULD BE PRIMAIRY!! 
-//like 11 , 53 , 101 , 199 ...
+const gridnum = 21;//THE gridnum SHOULD BE iMPAIR!! 
 container.setAttribute("style" ,`grid-template-columns: repeat(${gridnum}, 1fr); grid-template-rows: repeat(${gridnum}, 1fr); width : ${containerSize}px; height: ${containerSize}px;`);
 const gridSize = containerSize / gridnum;
 for (let i = 1; i <= gridnum**2; i++) {
@@ -14,8 +13,8 @@ for (let i = 1; i <= gridnum**2; i++) {
     container.appendChild(div);
 }
 
-
 const tank = "blue" ;
+const remove = "white"
 
 //Setting the initial position of the tank
 const initpos = Math.round(gridnum**2 / 2); //the center grid position
@@ -24,6 +23,35 @@ centerDiv.style.backgroundColor = tank ;
 let newDiv = centerDiv;
 let prevDiv = centerDiv;
 let pos = initpos;
+
+//Create the tank's hitbox
+const tankWidth = 5;//THE tankWidth Should be always impair !!!
+const tankHeight = 6;
+let cutTank = parseInt(tankWidth/2);
+
+//include the left side of the hit box
+function changeHitGridL(pos,color){
+    let hitGridL = cutTank;
+    while (hitGridL > 0){
+        let hdiv = document.getElementById(`${pos-hitGridL}`);
+        hdiv.style.backgroundColor = color;
+        hitGridL--;
+    }
+}
+
+//include or remove the right side of the hit box
+function changeHitGridR(pos,color){
+    let hitGridR = cutTank;
+    while (hitGridR > 0){
+        let hdiv = document.getElementById(`${pos+hitGridR}`);
+        hdiv.style.backgroundColor = color;
+        hitGridR--;
+    }
+}
+
+
+
+
 
 //putting the last line element in a list
 let lastLineFI = (gridnum**2-gridnum) + 1;
@@ -40,31 +68,47 @@ for (let i = 1 ; i <= gridnum;i++){
 }
 
 
-
+//Arrows Event listener
 window.addEventListener("keydown" , (e) => {
     if (e.key == "ArrowRight" && pos % gridnum != 0){
         prevDiv = newDiv;
+        changeHitGridL(pos,remove);
+        changeHitGridR(pos ,remove);
         prevDiv.style.backgroundColor = "white" ;
         pos ++;
         newDiv = document.getElementById(`${pos}`);
+        changeHitGridL(pos ,tank);
+        changeHitGridR(pos ,tank);
         newDiv.style.backgroundColor = tank;
     }else if (e.key == "ArrowLeft" && (pos-1) % gridnum != 0){
         prevDiv = newDiv;
+        changeHitGridL(pos,remove);
+        changeHitGridR(pos ,remove);
         prevDiv.style.backgroundColor = "white" ;
         pos --;
         newDiv = document.getElementById(`${pos}`);
+        changeHitGridL(pos ,tank);
+        changeHitGridR(pos ,tank);
         newDiv.style.backgroundColor = tank;
     }else if (e.key == "ArrowUp" && firstLine.indexOf(pos) == -1){
         prevDiv = newDiv;
+        changeHitGridL(pos,remove);
+        changeHitGridR(pos ,remove);
         prevDiv.style.backgroundColor = "white" ;
         pos -= gridnum ;
         newDiv = document.getElementById(`${pos}`);
+        changeHitGridL(pos ,tank);
+        changeHitGridR(pos ,tank);
         newDiv.style.backgroundColor = tank;
     }else if (e.key == "ArrowDown" && lastLine.indexOf(pos) == -1){
         prevDiv = newDiv;
+        changeHitGridL(pos,remove);
+        changeHitGridR(pos ,remove);
         prevDiv.style.backgroundColor = "white" ;
         pos += gridnum ;
         newDiv = document.getElementById(`${pos}`);
+        changeHitGridL(pos ,tank);
+        changeHitGridR(pos ,tank);
         newDiv.style.backgroundColor = tank;
     }
 })
